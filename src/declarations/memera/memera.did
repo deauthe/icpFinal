@@ -1,0 +1,17 @@
+type Listing = 
+ record {
+   itemLikedBy: List;
+   itemOwner: principal;
+ };
+type List = 
+ opt record {
+       principal;
+       List;
+     };
+service : {
+  Mint: (vec nat16, text) -> (principal);
+  getMemeListing: (principal) -> (Listing) query;
+  getMemeraCanisterId: () -> (principal) query;
+  getOwnedMemes: (principal) -> (vec principal) query;
+  getYourId: () -> (text);
+}

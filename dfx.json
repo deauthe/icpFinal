@@ -1,12 +1,16 @@
 {
   "canisters": {
-    "counter": {
-      "main": "canisters/counter/main.mo",
+    "memera": {
+      "main": "canisters/memera/main.mo",
+      "type": "motoko"
+    },
+    "meme": {
+      "main": "canisters/meme/meme.mo",
       "type": "motoko"
     },
     "assets": {
       "dependencies": [
-        "counter"
+        "memera"
       ],
       "frontend": {
         "entrypoint": "dist/index.html"
@@ -24,7 +28,7 @@
   },
   "networks": {
     "local": {
-      "bind": "127.0.0.1:4943",
+      "bind": "127.0.0.1:4933",
       "type": "ephemeral"
     },
     "ic": {

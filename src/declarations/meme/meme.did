@@ -1,0 +1,9 @@
+type Meme = 
+ service {
+   getAsset: () -> (vec nat16) query;
+   getCanisterId: () -> (principal) query;
+   getName: () -> (text) query;
+   getOwner: () -> (principal) query;
+   transferOwnerShip: (principal) -> (text);
+ };
+service : (text, principal, vec nat16) -> Meme
