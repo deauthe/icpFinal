@@ -10,8 +10,10 @@ type List =
      };
 service : {
   Mint: (vec nat16, text) -> (principal);
+  getExistingMemes: () -> (vec principal) query;
   getMemeListing: (principal) -> (Listing) query;
   getMemeraCanisterId: () -> (principal) query;
+  getOriginalOwner: (principal) -> (principal) query;
   getOwnedMemes: (principal) -> (vec principal) query;
   getYourId: () -> (text);
 }

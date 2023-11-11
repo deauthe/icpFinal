@@ -23,6 +23,7 @@ const Navbar = () => {
           <a href="#">Connect Wallet</a>
         </li>
       </ul>
+      
 
       <div className="sm:hidden flex flex-1 justify-end items-center">
         <img

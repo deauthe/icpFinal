@@ -15,7 +15,7 @@ actor Memera{
     //storing nft with their principals 
     var mapOfMeme = HashMap.HashMap<Principal,MemeActorClass.Meme>(1,Principal.equal,Principal.hash);
     //1 is initial capacity, equality of principal, hash of principal
-    //considering one guy owns complete ownership of an Meme, but one guy can own many Memes
+    //considering one guy owns complete ownership of a Meme, but one guy can own many Memes
     var mapOfOwners = HashMap.HashMap<Principal,List.List<Principal>>(1,Principal.equal,Principal.hash);
 
     //mapping a meme to the owner Id and the likes it has on a particular network
@@ -100,5 +100,14 @@ actor Memera{
         return Principal.toText(user);
     };
 
-
+    public query func getExistingMemes():async [Principal]{
+       return Iter.toArray(mapOfMeme.keys());
+    };
+    public query func getOriginalOwner(id:Principal):async Principal{
+        var listing: Listing = switch(mapOfSocial.get(id)){
+            case null return Principal.fromText("");
+            case (?result) result;
+        };
+        return listing.itemOwner;
+    };
 }

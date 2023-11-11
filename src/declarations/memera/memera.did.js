@@ -7,8 +7,10 @@ export const idlFactory = ({ IDL }) => {
   });
   return IDL.Service({
     'Mint' : IDL.Func([IDL.Vec(IDL.Nat16), IDL.Text], [IDL.Principal], []),
+    'getExistingMemes' : IDL.Func([], [IDL.Vec(IDL.Principal)], ['query']),
     'getMemeListing' : IDL.Func([IDL.Principal], [Listing], ['query']),
     'getMemeraCanisterId' : IDL.Func([], [IDL.Principal], ['query']),
+    'getOriginalOwner' : IDL.Func([IDL.Principal], [IDL.Principal], ['query']),
     'getOwnedMemes' : IDL.Func(
         [IDL.Principal],
         [IDL.Vec(IDL.Principal)],

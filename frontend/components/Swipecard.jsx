@@ -1,15 +1,34 @@
 import React from "react";
 import styles from "../style";
 import "./CardComps/Swiper.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 // import required modules
 import { EffectCards, Autoplay } from "swiper/modules";
 import { images } from "../constants";
+import Item from "../components/Item"
+const Swipecard = (props) => {
+  const [items,setItems]=useState();
+  
+  function fetchMemes(){
+    if(props.ids != undefined){
+      setItems(
+        props.ids.map(
+          (memeId)=>(<Item id={memeId} key={memeId.toText()} role={props.role}/>)
+        )
+      );
+    }
+  }
+  // only 1 time on page load
+  useEffect(()=>{
+      fetchMemes();
+  },[]);
 
-const Swipecard = () => {
+
+
+
   return (
     <section className="w-full min-h-[500px] flex flex-col justify-center items-center">
       <div className="w-[80%] mt-10 mb-6 shadowBox border-[1px] flex flex-col md:flex-row justify-evenly items-center py-6 px-6 rounded-[20px]">
@@ -35,15 +54,14 @@ const Swipecard = () => {
             modules={[EffectCards, Autoplay]}
             className="mySwiper"
           >
-            {images.map((items) => (
+            
+            {items !=undefined && 
+            items.map((item) => (
               <SwiperSlide>
-                <img
-                  src={items.Url}
-                  alt={items.title}
-                  className="w-full h-full border-[7px] rounded-[20px] border-#fdfcfc62"
-                />
+                {item}
               </SwiperSlide>
             ))}
+
           </Swiper>
         </div>
       </div>

@@ -4,23 +4,16 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png+xml" href="../assets/logo2.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone"></script>
+
   <title>NFTs MarketPlace</title>
 </head>
 <body>
 <div id="root"></div>
-<script type="module">
-  /**
-   * @dfinity/agent requires this. Can be removed once it's fixed
-   */
-  import { Buffer } from "buffer"
 
-  window.global = window
-  window.Buffer = Buffer
-</script>
 <p>is this working</p>
-<script type="module" src="/frontend/index.jsx"></script>
+<script type="module" src="./frontend/index.jsx" ></script>
 </body>
 </html>
