@@ -1,25 +1,38 @@
 import React from "react";
 import styles from "./style";
-import { useRef, useState, useEffect } from "react";
 import { Navbar, Page, Logos, Footer, Cards, Swipecard } from "./components";
-import Minter from "./components/Minter";
 import { memera } from "../src/declarations/memera";
-
+import Gallery from "./components/Gallery";
+import { useEffect, useState } from "react";
+import CURRENT_USER_ID from "./index";
+import Button from "./components/Button";
 const App = () => {
   const [userOwnedGallery, setUserOwnedGallery]=useState();
   const [listedGallery,setListedGallery]=useState();
-  async function getMemes(){
-    const userMemeIds=await memera.getOwnedMemes(CURRENT_USER_ID);
-    setUserOwnedGallery(<Swipecard title="My Collection" ids={userMemeIds} role="collection"/>)
-
-    const allMemes= await memera.getExistingMemes();
-    console.log(allMemes);
-    setListedGallery(<Swipecard title="Discover" ids={allMemes} role="discover"/>)
+  async function getMemes() {
+    try {
+      const myId = await memera.getYourId();
+      console.log(`my ID !!!! ${myId}`)
+      const userMemeIds = await memera.getOwnedMemes(CURRENT_USER_ID);
+      console.log(`owned memes : ${userMemeIds}`)
+      setUserOwnedGallery(<Gallery title="My Collection" ids={userMemeIds} role="collection" />);
+  
+      const allMemes = await memera.getExistingMemes();
+      console.log(`all memes : ${allMemes}`)
+      console.log(`user id !!!!!!:${CURRENT_USER_ID}`);
+      setListedGallery(<Gallery title="Discover" ids={allMemes} role="discover" />);
+      return "success"
+    } catch (error) {
+      console.error("Error fetching memes:", error);
+    }
   }
+  
 
   useEffect(()=>{
-  getMemes();
+    getMemes()
   },[]);
+  
+  
 
   return (
     <div className="bg-primary w-full overflow-hidden">
@@ -39,8 +52,10 @@ const App = () => {
         <div className={`${styles.boxWidth}`}>
           <Logos />
           <Cards />
-          <Swipecard />
-          <Minter/>
+          <Button text="getMemes" handleClick={getMemes}/>
+          {listedGallery}
+          {userOwnedGallery}
+          {/* <Swipecard/> */}
           <Footer />
         </div>
       </div>

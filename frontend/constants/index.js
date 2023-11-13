@@ -3,18 +3,14 @@ import { facebook, instagram, linkedin, twitter } from "../assets";
 export const navLinks = [
   {
     id: 1,
-    title: "Marketplace",
-  },
-  {
-    id: 2,
     title: "Collection",
   },
   {
-    id: 3,
+    id: 2,
     title: "Community",
   },
   {
-    id: 4,
+    id: 3,
     title: "Create",
   },
 ];

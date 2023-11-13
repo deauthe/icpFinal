@@ -10,7 +10,7 @@ import Cycles "mo:base/ExperimentalCycles"
 actor Memera{
     private type Listing ={ 
         itemOwner: Principal;
-        itemLikedBy: List.List<Principal>;
+        // itemLikedBy: List.List<Principal>;
     };
     //storing nft with their principals 
     var mapOfMeme = HashMap.HashMap<Principal,MemeActorClass.Meme>(1,Principal.equal,Principal.hash);
@@ -31,7 +31,22 @@ actor Memera{
         //store 
         mapOfMeme.put(newMemePrincipal,newMeme);
         addToOwnershipMap(owner,newMemePrincipal);
+        let newListing:Listing ={
+                        itemOwner=owner;
+                    };
+                    mapOfSocial.put(newMemePrincipal,newListing);
+                    
         return newMemePrincipal;
+    };
+
+     public query func isListed(id:Principal):async Bool{
+        if(mapOfSocial.get(id)== null)
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
     };
 
     private func addToOwnershipMap(owner:Principal,MemeId:Principal){
@@ -66,9 +81,9 @@ actor Memera{
 
     public query func getMemeListing(memeId:Principal): async Listing{
         let nullListing : Listing ={
-            itemOwner = Principal.fromText("");
-            itemLikes= 0;
-            itemLikedBy= List.nil<Principal>();
+            itemOwner = Principal.fromText("36y4s-b2xob-glukf-qskkz-4xd5z-cv5yk-eqsiu-y2wml-n63ju-mcxga-pqe");
+            // itemLikes= 0;
+            // itemLikedBy= List.nil<Principal>();
         };
         var listing: Listing = switch(mapOfSocial.get(memeId)){
             case null return nullListing;
@@ -89,7 +104,7 @@ actor Memera{
     //         meme.itemLikedBy.put(msg.caller);
     //         return "success"
     //     }
-    // }
+    // };
 
     public query func getMemeraCanisterId() : async Principal{
         return Principal.fromActor(Memera);
@@ -109,5 +124,31 @@ actor Memera{
             case (?result) result;
         };
         return listing.itemOwner;
+    };
+
+    public query func getListedMemes():async [Principal]{
+       return Iter.toArray(mapOfSocial.keys());
+    };
+
+    public shared(msg) func listItem(id:Principal,price:Nat):async Text{
+        //question return process
+            var item : MemeActorClass.Meme = switch(mapOfMeme.get(id)){
+                case null return "NFT does not exist";
+                case (?result) result;
+            };
+            let owner=await item.getOwner();
+            if(Principal.equal(owner,msg.caller)){
+                    let newListing:Listing ={
+                        itemOwner=owner;
+                        itemPrice=price;
+                    };
+                    mapOfSocial.put(id,newListing);
+                    return "Success";
+            }
+            else{
+                return "you don't owm this nft"
+
+            }
+            
     };
 }

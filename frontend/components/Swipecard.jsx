@@ -7,8 +7,8 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 // import required modules
 import { EffectCards, Autoplay } from "swiper/modules";
-import { images } from "../constants";
 import Item from "../components/Item"
+
 const Swipecard = (props) => {
   const [items,setItems]=useState();
   

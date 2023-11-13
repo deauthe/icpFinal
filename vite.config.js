@@ -86,5 +86,6 @@ export default defineConfig({
     "process.env.NODE_ENV": JSON.stringify(
       isDev ? "development" : "production",
     ),
+    global: () => window, //can cause problems further TODO:
   },
 })
